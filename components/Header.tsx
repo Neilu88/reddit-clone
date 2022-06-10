@@ -20,8 +20,8 @@ import Link from "next/link"
 const Header = () => {
   const { data: session } = useSession()
   return (
-    <div className="flex bg-white sticky top-0 z-50 px-4 py-2 shadow-sm flex-shrink-0 cursor-pointer">
-      <div className="relative h-10 w-20">
+    <div className="flex bg-white sticky top-0 z-50 px-4 py-2 shadow-sm">
+      <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
         <Link href="/">
           <Image
             objectFit="contain"
