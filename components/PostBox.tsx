@@ -22,52 +22,59 @@ function PostBox() {
   };
 
   return (
-    <div className="sticky p-4 mt-4 bg-gray-800 max-w-5xl mx-auto rounded-xl border border-gray-700 shadow-lg">
+    <div className="post-item p-4 border border-gray-700 bg-gray-800 rounded-lg shadow-md mt-4">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex items-center space-x-2 mb-4">
-          <p className="text-white font-semibold">Title</p>
+        {/* Title Input */}
+        <div className="flex flex-col space-y-1 mb-4">
+          <label className="text-gray-200 font-semibold">Title</label>
           <input
             {...register("title", { required: "Title is required" })}
-            className="flex-1 p-2 bg-gray-700 text-white rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter title"
+            className="p-2 bg-gray-700 text-gray-200 rounded placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter a descriptive title"
           />
           {errors.title && (
-            <p className="text-red-500">{errors.title.message}</p>
+            <p className="text-red-500 text-sm">{errors.title.message}</p>
           )}
         </div>
 
-        <div className="flex items-center space-x-2 mb-4">
-          <p className="text-white font-semibold">Body</p>
-          <input
+        {/* Body Input */}
+        <div className="flex flex-col space-y-1 mb-4">
+          <label className="text-gray-200 font-semibold">Body</label>
+          <textarea
             {...register("body", { required: "Body is required" })}
-            className="flex-1 p-2 bg-gray-700 text-white rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter body"
+            className="p-2 bg-gray-700 text-gray-200 rounded placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Share more details here"
+            rows={4}
           />
-          {errors.body && <p className="text-red-500">{errors.body.message}</p>}
+          {errors.body && (
+            <p className="text-red-500 text-sm">{errors.body.message}</p>
+          )}
         </div>
 
-        <div className="flex items-center space-x-2 mb-4">
-          <p className="text-white font-semibold">Community</p>
+        {/* Community Input */}
+        <div className="flex flex-col space-y-1 mb-4">
+          <label className="text-gray-200 font-semibold">Community</label>
           <input
             {...register("community", { required: "Community is required" })}
-            className="flex-1 p-2 bg-gray-700 text-white rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter community"
+            className="p-2 bg-gray-700 text-gray-200 rounded placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter the community name"
           />
           {errors.community && (
-            <p className="text-red-500">{errors.community.message}</p>
+            <p className="text-red-500 text-sm">{errors.community.message}</p>
           )}
         </div>
 
+        {/* Buttons */}
         <div className="flex justify-between mt-4">
           <button
             type="button"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 bg-blue-600 text-gray-200 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Upload Image
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="px-4 py-2 bg-green-600 text-gray-200 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             Create Post
           </button>

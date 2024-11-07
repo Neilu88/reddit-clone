@@ -56,7 +56,6 @@ export async function createPost(values: z.infer<typeof CreatePost>) {
       message: "Database Error: Failed to Create Post",
     };
   }
-  console.log("yass");
   revalidatePath("/");
   redirect("/");
 }
