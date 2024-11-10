@@ -81,7 +81,8 @@ model Post {
     createdAt   DateTime    @default(now())
     updatedAt   DateTime    @updatedAt
     title       String
-    body        String?
+    body        String
+    imageUrl    String
     community   Community   @relation(fields: [communityId], references: [name])
     communityId String
     user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)

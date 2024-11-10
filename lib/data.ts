@@ -9,6 +9,7 @@ export async function fetchPosts() {
       select: {
         id: true,
         title: true,
+        imageUrl: true,
         body: true,
         community: true,
       },

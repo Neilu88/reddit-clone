@@ -15,6 +15,7 @@ const Posts = () => {
             key={post.id}
             title={post.title}
             body={post.body}
+            imageUrl={post.imageUrl}
             community={post.community.name}
           />
         ))}

@@ -2,11 +2,19 @@
 
 import { createPost } from "@/lib/actions";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { UploadButton } from "../utils/uploadthing";
+import { useState } from "react";
 
 interface PostFormData {
   title: string;
   body: string;
   community: string;
+  imageUrl: string;
+}
+
+interface UploadFile {
+  url: string;
+  // Define other properties if UploadThing provides them, e.g., `name`, `size`, etc.
 }
 
 function PostBox() {
@@ -16,9 +24,13 @@ function PostBox() {
     formState: { errors },
   } = useForm<PostFormData>();
 
+  const [imageUrl, setImageUrl] = useState<string>("");
+
   const onSubmit: SubmitHandler<PostFormData> = async (data) => {
-    await createPost(data);
-    console.log(data); // Handle form submission logic here
+    const postData = { ...data, imageUrl };
+    console.log(imageUrl);
+    await createPost(postData);
+    console.log(postData); // Handle form submission logic here
   };
 
   return (
@@ -64,21 +76,26 @@ function PostBox() {
           )}
         </div>
 
-        {/* Buttons */}
-        <div className="flex justify-between mt-4">
-          <button
-            type="button"
-            className="px-4 py-2 bg-blue-600 text-gray-200 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Upload Image
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-green-600 text-gray-200 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            Create Post
-          </button>
+        {/* Upload Image Button */}
+        <div className="mb-4">
+          <UploadButton
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              setImageUrl(res[0].url);
+            }}
+            onUploadError={(error: Error) => {
+              console.error(error);
+            }}
+          />
         </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="px-4 py-2 bg-green-600 text-gray-200 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          Create Post
+        </button>
       </form>
     </div>
   );

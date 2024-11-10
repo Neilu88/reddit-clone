@@ -4,7 +4,8 @@ export const PostSchema = z.object({
   id: z.string(),
   title: z.string(),
   community: z.string(),
-  body: z.string().optional(),
+  imageUrl: z.string(),
+  body: z.string(),
 });
 
 export const CreatePost = PostSchema.omit({ id: true });

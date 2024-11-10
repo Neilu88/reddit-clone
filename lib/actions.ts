@@ -10,7 +10,7 @@ import { z } from "zod";
 export async function createPost(values: z.infer<typeof CreatePost>) {
   const userId = await getUserId();
 
-  const { body, title, community } = values;
+  const { body, title, community, imageUrl } = values;
   const validatedFields = CreatePost.safeParse(values);
   if (!validatedFields.success) {
     return {
@@ -44,6 +44,7 @@ export async function createPost(values: z.infer<typeof CreatePost>) {
             id: communityRecord.id,
           },
         },
+        imageUrl,
         user: {
           connect: {
             id: userId,
