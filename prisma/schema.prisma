@@ -49,6 +49,44 @@ model Session {
     @@index([userId])
 }
 
+model Post {
+    id          String      @id @default(cuid())
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    title       String
+    body        String
+    imageUrl    String
+    upvotes     Upvote[]
+    community   Community   @relation(fields: [communityId], references: [id])
+    communityId Int         // Changed to Int to match Community's primary key
+    user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      String      @map("user_id")
+
+    @@index([userId])
+    @@index([communityId])
+}
+
+model Upvote {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String   @map("user_id")
+
+    @@unique([postId, userId]) // Ensure a user can upvote a specific post only once
+    @@index([userId])
+}
+
+model Community {
+    id        Int      @id @default(autoincrement()) // Numeric primary key
+    name      String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    posts     Post[]
+}
+
 model User {
     id            String      @id @default(cuid())
     name          String?
@@ -62,32 +100,9 @@ model User {
     createdAt     DateTime    @default(now()) @map(name: "created_at")
     updatedAt     DateTime    @updatedAt @map(name: "updated_at")
     posts         Post[]
+    upvotes Upvote[]
     accounts      Account[]
     sessions      Session[]
 
     @@map(name: "users")
-}
-
-
-model Community {
-id        Int      @id @default(autoincrement()) // Numeric primary key
-  name String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  posts Post[]
-}
-model Post {
-    id          String      @id @default(cuid())
-    createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
-    title       String
-    body        String
-    imageUrl    String
-    community   Community   @relation(fields: [communityId], references: [name])
-    communityId String
-    user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId    String      @map("user_id")
-
-    @@index([userId])
-    @@index([communityId])
 }
