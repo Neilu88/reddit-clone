@@ -63,6 +63,7 @@ model User {
     updatedAt     DateTime    @updatedAt @map(name: "updated_at")
     posts         Post[]
     upvotes       Upvote[]
+    downvotes     Downvote[]
     accounts      Account[]
     sessions      Session[]
 
@@ -85,6 +86,7 @@ model Post {
     body        String
     imageUrl    String
     upvotes     Upvote[]
+    downvotes   Downvote[]
     community   Community   @relation(fields: [communityId], references: [name])
     communityId String
     user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -95,6 +97,20 @@ model Post {
 }
 
 model Upvote {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    String
+    userId    String   @map("user_id")
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([postId, userId])
+    @@index([userId])
+}
+
+model Downvote {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

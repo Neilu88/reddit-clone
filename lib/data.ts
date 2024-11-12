@@ -12,6 +12,11 @@ export async function fetchPosts() {
         imageUrl: true,
         body: true,
         community: true,
+        upvotes: {
+          include: {
+            user: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
