@@ -85,7 +85,7 @@ export async function upvotePost(value: FormDataEntryValue | null) {
     throw new Error("Post not found");
   }
 
-  const like = await prisma.upvote.findUnique({
+  const upvote = await prisma.upvote.findUnique({
     where: {
       postId_userId: {
         postId,
@@ -94,7 +94,7 @@ export async function upvotePost(value: FormDataEntryValue | null) {
     },
   });
 
-  if (like) {
+  if (upvote) {
     try {
       await prisma.upvote.delete({
         where: {
@@ -105,9 +105,9 @@ export async function upvotePost(value: FormDataEntryValue | null) {
         },
       });
       revalidatePath("/dashboard");
-      return { message: "Unliked Post." };
+      return { message: "Un-Upvoted Post." };
     } catch (error) {
-      return { message: "Database Error: Failed to Unlike Post." };
+      return { message: "Database Error: Failed to Un-Upvote Post." };
     }
   }
 
@@ -119,8 +119,8 @@ export async function upvotePost(value: FormDataEntryValue | null) {
       },
     });
     revalidatePath("/dashboard");
-    return { message: "Liked Post." };
+    return { message: "Upvoted Post." };
   } catch (error) {
-    return { message: "Database Error: Failed to upvote Post." };
+    return { message: "Database Error: Failed to Upvote Post." };
   }
 }
