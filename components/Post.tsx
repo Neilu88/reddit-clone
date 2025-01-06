@@ -25,6 +25,13 @@ const Post: React.FC<PostProps> = ({
 }) => {
   const [votes, setVotes] = useState(upvotes.length);
   const [userVote, setUserVote] = useState<"up" | "down" | null>(null);
+  const [commentInput, setCommentInput] = useState(""); // State to track the comment input
+  const [comments, setComments] = useState<string[]>([ // Pre-filled example comments
+    "Great post! I really enjoyed reading this.",
+    "I disagree with some of the points, but still a good read.",
+    "This was very informative. Thanks for sharing!",
+    "Looking forward to more posts like this. Keep it up!",
+  ]);
 
   const handleVote = async (voteType: "up" | "down") => {
     if (userVote === voteType) {
@@ -45,6 +52,18 @@ const Post: React.FC<PostProps> = ({
             : -1)
       );
       setUserVote(voteType);
+    }
+  };
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCommentInput(e.target.value); // Update the comment input state as user types
+  };
+
+  const handleCommentSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent page reload
+    if (commentInput.trim()) {
+      setComments([...comments, commentInput]); // Add the new comment to the list
+      setCommentInput(""); // Clear the comment input field
     }
   };
 
@@ -106,6 +125,44 @@ const Post: React.FC<PostProps> = ({
         <p className="text-sm text-blue-400">
           Community: <span className="font-medium">{community}</span>
         </p>
+
+        {/* Comment Box Section */}
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold text-gray-100 mb-2">Comments</h3>
+
+          {/* Comment Input */}
+          <form onSubmit={handleCommentSubmit} className="flex gap-2 mb-4">
+            <input
+              type="text"
+              value={commentInput}
+              onChange={handleCommentChange}
+              placeholder="Write a comment..."
+              className="flex-1 p-2 bg-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <button
+              type="submit"
+              className="p-2 bg-orange-500 rounded-lg text-white hover:bg-orange-600 transition-colors"
+              aria-label="Submit Comment"
+            >
+              Submit
+            </button>
+          </form>
+
+          {/* Render Comments */}
+          <div className="space-y-4">
+            {comments.map((comment, index) => (
+              <div
+                key={index}
+                className="p-4 bg-gray-700 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+              >
+                <p className="text-gray-300 text-sm">{comment}</p>
+                <div className="mt-2 border-t border-gray-600 pt-2 text-xs text-gray-400">
+                  <span>Posted by Anonymous</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

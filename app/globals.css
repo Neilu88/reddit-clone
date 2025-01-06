@@ -70,3 +70,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.dark {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.light {
+  background-color: #ffffff;
+  color: black;
+}
