@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowBigUp, ArrowBigDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { upvotePost } from "@/lib/actions";
+import Link from "next/link";
 
 type PostProps = {
   postId: string;
@@ -26,7 +27,8 @@ const Post: React.FC<PostProps> = ({
   const [votes, setVotes] = useState(upvotes.length);
   const [userVote, setUserVote] = useState<"up" | "down" | null>(null);
   const [commentInput, setCommentInput] = useState(""); // State to track the comment input
-  const [comments, setComments] = useState<string[]>([ // Pre-filled example comments
+  const [comments, setComments] = useState<string[]>([
+    // Pre-filled example comments
     "Great post! I really enjoyed reading this.",
     "I disagree with some of the points, but still a good read.",
     "This was very informative. Thanks for sharing!",
@@ -121,10 +123,11 @@ const Post: React.FC<PostProps> = ({
         )}
 
         <p className="text-gray-300 mb-4">{body}</p>
-
-        <p className="text-sm text-blue-400">
-          Community: <span className="font-medium">{community}</span>
-        </p>
+        <Link href={`/communities/${community}`}>
+          <p className="text-sm text-blue-400">
+            Community: <span className="font-medium">{community}</span>
+          </p>
+        </Link>
 
         {/* Comment Box Section */}
         <div className="mt-4">

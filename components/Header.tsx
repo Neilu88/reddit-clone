@@ -31,10 +31,7 @@ function Header() {
           Log in
         </Button>
       )}
-      <Button 
-        onClick={toggleDarkMode} 
-        className="font-semibold text-sm"
-      >
+      <Button onClick={toggleDarkMode} className="font-semibold text-sm">
         {theme === "dark" ? "Light Mode" : "Dark Mode"}
       </Button>
     </div>
