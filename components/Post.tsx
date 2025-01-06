@@ -4,25 +4,36 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { ArrowBigUp, ArrowBigDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { upvotePost } from "@/lib/actions";
 
 type PostProps = {
+  postId: string;
   title: string;
   body: string;
   community: string;
   imageUrl: string | null;
+  upvotes: any;
 };
 
-const Post: React.FC<PostProps> = ({ title, body, community, imageUrl }) => {
-  const [votes, setVotes] = useState(0);
+const Post: React.FC<PostProps> = ({
+  postId,
+  title,
+  body,
+  community,
+  imageUrl,
+  upvotes,
+}) => {
+  const [votes, setVotes] = useState(upvotes.length);
   const [userVote, setUserVote] = useState<"up" | "down" | null>(null);
 
-  const handleVote = (voteType: "up" | "down") => {
+  const handleVote = async (voteType: "up" | "down") => {
     if (userVote === voteType) {
       // Remove vote
       setVotes(votes + (voteType === "up" ? -1 : 1));
       setUserVote(null);
     } else {
       // Add/change vote
+      await upvotePost(postId);
       setVotes(
         votes +
           (voteType === "up"

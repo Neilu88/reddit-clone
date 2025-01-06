@@ -13,10 +13,12 @@ const Posts = () => {
         {postsData.map((post) => (
           <Post
             key={post.id}
+            postId={post.id}
             title={post.title}
             body={post.body}
             imageUrl={post.imageUrl}
             community={post.community.name}
+            upvotes={post.upvotes}
           />
         ))}
       </div>
