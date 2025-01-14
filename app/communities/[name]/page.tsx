@@ -1,6 +1,5 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 
 const CommunityPage = () => {
   const pathname = usePathname();
@@ -13,19 +12,9 @@ const CommunityPage = () => {
   return (
     <div className="bg-gray-50 min-h-screen py-10 px-6">
       <div className="max-w-7xl mx-auto space-y-10">
-        {/* Banner Section */}
-        <div className="relative rounded-lg overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-black opacity-40"></div>
-          <Image
-            src="https://via.placeholder.com/1500x400.png?text=Community+Banner"
-            alt="Community Banner"
-            width={1500}
-            height={400}
-            className="object-cover w-full h-64"
-          />
-          <div className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold">
-            <h1>{name} Community</h1>
-          </div>
+        {/* Banner Section - Black Div */}
+        <div className="relative rounded-lg overflow-hidden bg-black h-64 flex items-center justify-center text-white">
+          <h1 className="text-3xl font-bold">{name} Community</h1>
         </div>
 
         {/* Main Community Content */}

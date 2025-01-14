@@ -87,6 +87,7 @@ model Post {
     imageUrl    String
     upvotes     Upvote[]
     downvotes   Downvote[]
+    comments  Comment[] // Relation to comments
     community   Community   @relation(fields: [communityId], references: [name])
     communityId String
     user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -122,4 +123,12 @@ model Downvote {
 
     @@unique([postId, userId])
     @@index([userId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
 }
